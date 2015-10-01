@@ -10,9 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.Gravity;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
 import com.deutschwelle.fpt.videometrics.login.UserInformation;
 import com.deutschwelle.fpt.videometrics.tasks.LoginTask;
 import com.deutschwelle.fpt.videometrics.utils.Storage;
@@ -34,6 +40,18 @@ public class HomeActivity extends Activity {
         
         // initialize views
         mEdtUsername = (EditText)findViewById(R.id.edit_user_name);
+        
+        mEdtUsername.setOnFocusChangeListener( new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus == true)
+				{
+					HomeActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+				}
+				
+			}
+		});
         mEdtPassword = (EditText)findViewById(R.id.edit_password);
         mImgBtnLogin = (ImageButton)findViewById(R.id.img_btn_login);
         mImgBtnLogin.setBackgroundResource(R.drawable.btn_login_backgroud_change);
@@ -57,7 +75,14 @@ public class HomeActivity extends Activity {
 			@Override
 			public void onPostExecute(int nResult) {
 				dismissDialog(DIALOG_LOADING);
-				if(nResult == HttpStatus.SC_OK){
+				if (nResult != HttpStatus.SC_OK)
+				{
+					Toast mCurrentToast = Toast.makeText(HomeActivity.this,"Username of password incorrect.", Toast.LENGTH_SHORT);    	        	
+    	        	mCurrentToast.setGravity(Gravity.CENTER, 0, 0);
+    	        	mCurrentToast.show();
+				}				
+				else
+				{
 					
 					// save username and password.
 					JSONObject userCredit = new JSONObject();
@@ -86,6 +111,8 @@ public class HomeActivity extends Activity {
 				String szPassword = mEdtPassword.getEditableText().toString();
 				UserInformation userInfo = new UserInformation(szUserName, szPassword);
 				
+				runOnUiThread(hideSoftKeyboard);
+				
 				LoginTask loginTask = new LoginTask(mNotificator);
 				try {
 					loginTask.execute(userInfo);
@@ -96,7 +123,13 @@ public class HomeActivity extends Activity {
 			}
 		});
     }
-    
+    private Runnable hideSoftKeyboard = new Runnable() {
+        public void run() {
+        	InputMethodManager inputMethodManager = (InputMethodManager)  HomeActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(HomeActivity.this.getCurrentFocus().getWindowToken(), 0);            
+        }
+    };
+
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
