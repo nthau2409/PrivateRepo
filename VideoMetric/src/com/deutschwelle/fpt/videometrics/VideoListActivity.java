@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.widget.VideoView;
 
 public class VideoListActivity extends Activity{
 
@@ -28,7 +29,8 @@ public class VideoListActivity extends Activity{
 			
 			@Override
 			public void onPageSelected(int pageIndex) {
-				Log.i(TAG, "[onPageSelected] pageIndex = " + pageIndex);
+				VideoView video = (VideoView) viewPager.getChildAt(pageIndex);
+				Log.i(TAG, "[onPageSelected] pageIndex = " + pageIndex + ", video = " + video.getClass().getName());
 			}
 			
 			@Override

@@ -1,12 +1,109 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoListActivity" >
     
-		  <android.support.v4.view.ViewPager
-		  android:id="@+id/view_pager"
-		  android:layout_width="match_parent"
-		  android:layout_height="match_parent" />
+    <android.support.v4.view.ViewPager
+	  	android:id="@+id/view_pager"
+	  	android:layout_width="match_parent"
+	  	android:layout_height="match_parent" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="20" >
 
-</RelativeLayout>
+        <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1" 
+	        >
+	        
+	    </LinearLayout>
+	    
+        <!-- put left control within this layout -->
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:layout_weight="1" 
+	        android:weightSum="7"
+	        >
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_weight="2" >
+</LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_weight="3" >
+
+	            <ImageButton 
+	                android:layout_width="match_parent"
+	             	android:layout_height="match_parent"
+	             	android:background="@drawable/left"
+	             	/>
+	        </LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_weight="2" >
+</LinearLayout>
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="16" >
+	        
+	    </LinearLayout>
+	    
+	    <!-- put right control within this layout -->
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:layout_weight="1" 
+	        android:weightSum="7"
+	        >
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_weight="2" >
+</LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_weight="3" >
+
+	            <ImageButton 
+	                android:layout_width="match_parent"
+	             	android:layout_height="match_parent"
+	             	android:background="@drawable/right"
+	             	/>
+	        </LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_weight="2" >
+</LinearLayout>
+	    </LinearLayout>
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1" 
+	        >
+	        
+	    </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
