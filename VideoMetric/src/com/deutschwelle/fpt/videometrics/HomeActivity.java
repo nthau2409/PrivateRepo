@@ -33,6 +33,7 @@ public class HomeActivity extends Activity {
         mEdtUsername = (EditText)findViewById(R.id.edit_user_name);
         mEdtPassword = (EditText)findViewById(R.id.edit_password);
         mImgBtnLogin = (ImageButton)findViewById(R.id.img_btn_login);
+        mImgBtnLogin.setBackgroundResource(R.drawable.btn_login_backgroud_change);
         
         mNotificator = new AsynTaskNotificator() {
 			
