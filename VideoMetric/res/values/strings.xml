@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Video Metrics</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_caption">Log in</string>
+    
+    <string name="client">Client</string>
+    <string name="simple">Simple</string>
+    <string name="master">Master</string>
+
+</resources>
