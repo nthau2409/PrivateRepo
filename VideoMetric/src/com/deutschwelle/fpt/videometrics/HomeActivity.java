@@ -1,6 +1,8 @@
 package com.deutschwelle.fpt.videometrics;
 
 import org.apache.http.HttpStatus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import com.deutschwelle.fpt.videometrics.login.UserInformation;
 import com.deutschwelle.fpt.videometrics.tasks.LoginTask;
+import com.deutschwelle.fpt.videometrics.utils.Storage;
 
 public class HomeActivity extends Activity {
 	private static final int DIALOG_LOADING = 1;	
@@ -35,6 +38,15 @@ public class HomeActivity extends Activity {
         mImgBtnLogin = (ImageButton)findViewById(R.id.img_btn_login);
         mImgBtnLogin.setBackgroundResource(R.drawable.btn_login_backgroud_change);
         
+        // username: api@a.b
+        // password: !23Test
+        
+        UserInformation savedUserInfo = Storage.getInstance().getUserCredit(getApplicationContext());
+        if (savedUserInfo != null) {
+			mEdtUsername.setText(savedUserInfo.getUserName());
+			mEdtPassword.setText(savedUserInfo.getPassword());
+		}
+        
         mNotificator = new AsynTaskNotificator() {
 			
 			@Override
@@ -46,6 +58,18 @@ public class HomeActivity extends Activity {
 			public void onPostExecute(int nResult) {
 				dismissDialog(DIALOG_LOADING);
 				if(nResult == HttpStatus.SC_OK){
+					
+					// save username and password.
+					JSONObject userCredit = new JSONObject();
+					try {
+						userCredit.put("username", mEdtUsername.getEditableText().toString());
+						userCredit.put("password", mEdtPassword.getEditableText().toString());
+						
+						Storage.getInstance().writeUserCredit(getApplicationContext(), userCredit);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					
 					Intent intent = new Intent(HomeActivity.this, VideoListActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
