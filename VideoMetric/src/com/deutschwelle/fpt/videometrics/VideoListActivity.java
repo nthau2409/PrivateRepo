@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
-import android.widget.VideoView;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 
 public class VideoListActivity extends Activity{
-
 	private static final String TAG = "[" + VideoListActivity.class.getSimpleName() + "]";
+	
+	private ImageButton mLeftBtn = null;
+	private ImageButton mRightBtn = null;
+	private ImageButton mPlayBtn = null;
+	private ViewPager mViewPager = null;
 	
 	public static interface OnPostExecuteListener{
 		void onPreExecute();
@@ -21,11 +26,38 @@ public class VideoListActivity extends Activity{
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_video_list);
 	    
-	    final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-	    VideoAdapter adapter = new VideoAdapter(this);
-	    viewPager.setAdapter(adapter);
+	    mLeftBtn = (ImageButton) findViewById(R.id.btn_left);
+	    mRightBtn = (ImageButton) findViewById(R.id.btn_right);
+	    //mPlayBtn = (ImageButton) findViewById(R.id.btn_play);
+	    mViewPager = (ViewPager) findViewById(R.id.view_pager);
 	    
-	    viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+	    mLeftBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int nCurrentIndex = mViewPager.getCurrentItem();
+				if(nCurrentIndex > 0){
+					mViewPager.setCurrentItem(nCurrentIndex - 1);
+				}
+			}
+		});
+	    
+	    mRightBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int nCurrentIndex = mViewPager.getCurrentItem();
+				int nItemCount = mViewPager.getChildCount();
+				if(nCurrentIndex < nItemCount - 1){
+					mViewPager.setCurrentItem(nCurrentIndex + 1);
+				}
+			}
+		});
+	    
+	    VideoAdapter adapter = new VideoAdapter(this);
+	    mViewPager.setAdapter(adapter);
+	    
+	    mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
 			public void onPageSelected(int pageIndex) {
@@ -41,5 +73,6 @@ public class VideoListActivity extends Activity{
 			public void onPageScrollStateChanged(int pageIndex) {
 			}
 		});
+	    
 	}
 }
