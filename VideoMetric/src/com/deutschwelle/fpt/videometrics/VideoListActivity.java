@@ -1,6 +1,7 @@
 package com.deutschwelle.fpt.videometrics;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -16,6 +17,7 @@ public class VideoListActivity extends Activity{
 	private ImageButton mRightBtn = null;
 	private ImageView mPlayBtn = null;
 	private ViewPager mViewPager = null;
+	private ImageView mLogoutBtn = null;
 	
 	public static interface OnPostExecuteListener{
 		void onPreExecute();
@@ -30,6 +32,7 @@ public class VideoListActivity extends Activity{
 	    mLeftBtn = (ImageButton) findViewById(R.id.btn_left);
 	    mRightBtn = (ImageButton) findViewById(R.id.btn_right);
 	    mPlayBtn = (ImageView) findViewById(R.id.btn_play_video);
+	    mLogoutBtn = (ImageView) findViewById(R.id.btn_logout);
 	    mViewPager = (ViewPager) findViewById(R.id.view_pager);
 	    
 	    mLeftBtn.setOnClickListener(new OnClickListener() {
@@ -52,6 +55,16 @@ public class VideoListActivity extends Activity{
 				if(nCurrentIndex < nItemCount - 1){
 					mViewPager.setCurrentItem(nCurrentIndex + 1);
 				}
+			}
+		});
+	    
+	    mLogoutBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(VideoListActivity.this, HomeActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
 			}
 		});
 	    

@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffffff"
+    android:descendantFocusability="beforeDescendants"
+  	android:focusableInTouchMode="true"
     android:weightSum="20" >
     <!-- This layout is used to put Simple - Client - Master -->
 	<LinearLayout

@@ -46,6 +46,7 @@ public class HomeActivity extends Activity {
 				dismissDialog(DIALOG_LOADING);
 				if(nResult == HttpStatus.SC_OK){
 					Intent intent = new Intent(HomeActivity.this, VideoListActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
 				}
 			}
