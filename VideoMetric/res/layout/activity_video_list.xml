@@ -94,7 +94,7 @@
 	                android:orientation="vertical" >
 
 	                <ImageView
-	                    android:id="@+id/btn_play"
+	                    android:id="@+id/btn_play_video"
 	                    android:layout_width="match_parent"
 	                    android:layout_height="match_parent"
 	                    android:src="@drawable/play" />

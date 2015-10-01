@@ -7,13 +7,14 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class VideoListActivity extends Activity{
 	private static final String TAG = "[" + VideoListActivity.class.getSimpleName() + "]";
 	
 	private ImageButton mLeftBtn = null;
 	private ImageButton mRightBtn = null;
-	private ImageButton mPlayBtn = null;
+	private ImageView mPlayBtn = null;
 	private ViewPager mViewPager = null;
 	
 	public static interface OnPostExecuteListener{
@@ -28,7 +29,7 @@ public class VideoListActivity extends Activity{
 	    
 	    mLeftBtn = (ImageButton) findViewById(R.id.btn_left);
 	    mRightBtn = (ImageButton) findViewById(R.id.btn_right);
-	    //mPlayBtn = (ImageButton) findViewById(R.id.btn_play);
+	    mPlayBtn = (ImageView) findViewById(R.id.btn_play_video);
 	    mViewPager = (ViewPager) findViewById(R.id.view_pager);
 	    
 	    mLeftBtn.setOnClickListener(new OnClickListener() {
