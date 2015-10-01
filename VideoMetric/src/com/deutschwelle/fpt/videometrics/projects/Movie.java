@@ -1,11 +1,20 @@
 package com.deutschwelle.fpt.videometrics.projects;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 public class Movie {
 	private int mMovieId;
 	private String mMovieTitle = "";
 	private String mMovieDescription = "";
 	private String mMovieUrl = "";
 	private String mMovieThumbUrl = ""; 
+	private Bitmap mBitmap = null;
 	
 	public Movie(int movieId, String szMovieTitle, String szMovieDes, String szMovieUrl, String szMovieThumb){
 		this.mMovieId = movieId;
@@ -13,6 +22,8 @@ public class Movie {
 		this.mMovieDescription = szMovieDes;
 		this.mMovieUrl = szMovieUrl;
 		this.mMovieThumbUrl = szMovieThumb;
+		
+		mBitmap = getBitmapFromURL(szMovieThumb);
 	}
 	
 	public int getMovieId() {
@@ -46,5 +57,24 @@ public class Movie {
 		this.mMovieThumbUrl = mMovieThumbUrl;
 	}
 	
+	public Bitmap getMovieThumbnailBitmap(){
+		return mBitmap;
+	}
 	
+	private Bitmap getBitmapFromURL(String imageUrl) {
+		Bitmap bitmap = null;
+		try {
+			URL url = new URL(imageUrl);
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(5000);
+            conn.setInstanceFollowRedirects(true);
+            InputStream input = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(input);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bitmap;
+	}
 }

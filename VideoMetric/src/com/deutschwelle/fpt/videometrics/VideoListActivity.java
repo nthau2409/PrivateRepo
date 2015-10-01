@@ -29,8 +29,8 @@ public class VideoListActivity extends Activity{
 			
 			@Override
 			public void onPageSelected(int pageIndex) {
-				VideoView video = (VideoView) viewPager.getChildAt(pageIndex);
-				Log.i(TAG, "[onPageSelected] pageIndex = " + pageIndex + ", video = " + video.getClass().getName());
+				//VideoView video = (VideoView) viewPager.getChildAt(pageIndex);
+				//Log.i(TAG, "[onPageSelected] pageIndex = " + pageIndex + ", video = " + video.getClass().getName());
 			}
 			
 			@Override
