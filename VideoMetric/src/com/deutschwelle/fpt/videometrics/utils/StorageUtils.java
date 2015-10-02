@@ -10,11 +10,11 @@ import com.deutschwelle.fpt.videometrics.login.UserInformation;
 
 import android.content.Context;
 
-public class Storage {
-	private static final Storage INSTANCE = new Storage();
-	private Storage(){}
+public class StorageUtils {
+	private static final StorageUtils INSTANCE = new StorageUtils();
+	private StorageUtils(){}
 	
-	public static Storage getInstance(){
+	public static StorageUtils getInstance(){
 		return INSTANCE;
 	}
 	

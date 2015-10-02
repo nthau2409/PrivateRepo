@@ -11,17 +11,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
-import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
 import com.deutschwelle.fpt.videometrics.login.UserInformation;
 import com.deutschwelle.fpt.videometrics.tasks.LoginTask;
-import com.deutschwelle.fpt.videometrics.utils.Storage;
+import com.deutschwelle.fpt.videometrics.utils.AlertUtils;
+import com.deutschwelle.fpt.videometrics.utils.NetworkUtils;
+import com.deutschwelle.fpt.videometrics.utils.StorageUtils;
 
 public class HomeActivity extends Activity {
 	private static final int DIALOG_LOADING = 1;	
@@ -59,7 +58,7 @@ public class HomeActivity extends Activity {
         // username: api@a.b
         // password: !23Test
         
-        UserInformation savedUserInfo = Storage.getInstance().getUserCredit(getApplicationContext());
+        UserInformation savedUserInfo = StorageUtils.getInstance().getUserCredit(getApplicationContext());
         if (savedUserInfo != null) {
 			mEdtUsername.setText(savedUserInfo.getUserName());
 			mEdtPassword.setText(savedUserInfo.getPassword());
@@ -77,9 +76,8 @@ public class HomeActivity extends Activity {
 				dismissDialog(DIALOG_LOADING);
 				if (nResult != HttpStatus.SC_OK)
 				{
-					Toast mCurrentToast = Toast.makeText(HomeActivity.this,"Username of password incorrect.", Toast.LENGTH_SHORT);    	        	
-    	        	mCurrentToast.setGravity(Gravity.CENTER, 0, 0);
-    	        	mCurrentToast.show();
+					AlertUtils.showAlertDialog(HomeActivity.this, "Error", "Login failed. Please check your login account or network connection");
+					return;
 				}				
 				else
 				{
@@ -90,7 +88,7 @@ public class HomeActivity extends Activity {
 						userCredit.put("username", mEdtUsername.getEditableText().toString());
 						userCredit.put("password", mEdtPassword.getEditableText().toString());
 						
-						Storage.getInstance().writeUserCredit(getApplicationContext(), userCredit);
+						StorageUtils.getInstance().writeUserCredit(getApplicationContext(), userCredit);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
@@ -107,6 +105,12 @@ public class HomeActivity extends Activity {
 			@Override
 			public void onClick(View v) 
 			{
+				boolean isNetworkAvailable = NetworkUtils.verifyNetwork(getApplicationContext());
+				if(isNetworkAvailable == false){
+					AlertUtils.showAlertDialog(HomeActivity.this, "Error", "Login failed. Please check your login account or network connection");
+					return;
+				}
+				
 				String szUserName = mEdtUsername.getEditableText().toString();
 				String szPassword = mEdtPassword.getEditableText().toString();
 				UserInformation userInfo = new UserInformation(szUserName, szPassword);
